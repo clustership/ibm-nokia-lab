@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: debug-pod
+spec:
+  containers:
+  - name: debug-pod
+    image: quay.io/xymox/ubi8-debug-toolkit:latest
+    imagePullPolicy: IfNotPresent
+    command: ["sleep", "infinity"]
