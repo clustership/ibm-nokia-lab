@@ -1,0 +1,12 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: nginx-svc
+  namespace: istio-system
+spec:
+  host: nginx-istio.apps.ai-bm-demo.clustership.com
+  to:
+    kind: Service
+    name: istio-ingressgateway
+  port:
+    targetPort: http2

@@ -1,0 +1,19 @@
+---
+# Source: nginx/templates/route.yaml
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app.kubernetes.io/name: nginx
+  name: nginx-service
+spec:
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: edge
+  port:
+    targetPort: http-8080
+  to:
+    kind: Service
+    name: nginx
+    weight: 100
+  wildcardPolicy: None

@@ -1,0 +1,14 @@
+      additionalIngress:
+        nodeport-ingressgateway:
+          enabled: true
+          ingress: true
+          runtime:
+            container:
+              resources:
+                requests:
+                  cpu: 10m
+                  memory: 128Mi
+            deployment:
+              autoScaling:
+          service:
+            type: NodePort
