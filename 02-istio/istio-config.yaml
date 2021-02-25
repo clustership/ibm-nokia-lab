@@ -12,7 +12,7 @@ spec:
       name: http
       protocol: HTTP
     hosts:
-    - "nginx-istio.apps.ai-bm-demo.clustership.com"
+    - "rh-nginx-istio.apps.tnc-env3-rhocp.nca.ihost.com"
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
