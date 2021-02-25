@@ -1,7 +1,7 @@
 apiVersion: maistra.io/v2
 kind: ServiceMeshControlPlane
 metadata:
-  name: basic
+  name: nodeport-smcp
   namespace: istio-system
 spec:
   addons:
@@ -37,20 +37,6 @@ spec:
         deployment:
           autoScaling:
             enabled: false
-      service: {}
-    additionalIngress:
-      nodeport-ingressgateway:
-        enabled: true
-        ingress: false
-        runtime:
-          metadata:
-            labels:
-              app: nodeport-ingressgateway
-              patrick: star
-        service:
-          metadata:
-            labels:
-              app: nodeport-ingressgateway
-              bob: leponge
-          type: NodePort
+      service:
+        type: NodePort
   version: v2.0
