@@ -2,13 +2,11 @@ apiVersion: v1
 kind: Pod
 metadata:
   annotations:
-    k8s.v1.cni.cncf.io/networks: ipvlan-nw-oam-ip-necc-amf@eth2
+    k8s.v1.cni.cncf.io/networks: ipvlan-net-1
   name: net-test
 spec:
   containers:
   - name: debug-pod
     image: quay.io/xymox/ubi8-debug-toolkit:latest
-    imagePullPolicy: IfNotPresent
+    imagePullPolicy: Always
     command: ["sleep", "infinity"]
-  nodeSelector:
-    kubernetes.io/hostname: worker6

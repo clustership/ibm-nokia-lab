@@ -1,0 +1,72 @@
+---
+# Source: nginx/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: nginx
+  labels:
+    app.kubernetes.io/name: nginx
+---
+# Source: nginx/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  labels:
+    app.kubernetes.io/name: nginx
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      targetPort: http-8080
+      protocol: TCP
+      name: http-8080
+  selector:
+    app.kubernetes.io/name: nginx
+---
+# Source: nginx/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  labels:
+    app.kubernetes.io/name: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: nginx
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        app.kubernetes.io/name: nginx
+    spec:
+      serviceAccountName: nginx
+      securityContext:
+        {}
+      containers:
+        - name: nginx
+          securityContext:
+            {}
+          image: "quay.io/xymox/vue-todos-ubi8:main"
+          imagePullPolicy: IfNotPresent
+          command:
+          - /bin/sh
+          - -c
+          - /usr/sbin/nginx -g "daemon off;"
+          ports:
+            - name: http-8080
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http-8080
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http-8080
+          resources:
+            {}
